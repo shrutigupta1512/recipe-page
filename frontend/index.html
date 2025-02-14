@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe App</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Recipe App</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="favourites.html">Favourites</a>
+      <a href="collections.html">Collections</a> 
+      <a href="search.html">Search</a>
+      <a href="post-recipe.html" class="post-recipe-button">Post Recipe</a>
+      <a href="profile.html">Profile</a>
+      <a href="myrecipe.html">My recipes</a>
+      <!-- Login/Signup buttons -->
+      <a href="login.html" id="login-btn">Login</a>
+      <a href="signup.html" id="signup-btn">Signup</a>
+      
+      <button id="admin-dashboard-btn" style="display: none;" onclick="window.location.href='admin-dashboard.html'">Admin Dashboard</button>
+
+      <!-- Logout button (hidden initially) -->
+      <a href="#" id="logout-btn" style="display:none;">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>All Recipes</h2>
+    <div id="recipes-list" class="recipes-grid"></div>
+  </main>
+
+  <script src="js/recipe.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  
+</body>
+</html>

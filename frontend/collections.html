@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Collections</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <h1>My Recipe Collections</h1>
+  <nav>
+    <button onclick="fetchCollection('breakfast')">Breakfast</button>
+    <button onclick="fetchCollection('lunch')">Lunch</button>
+    <button onclick="fetchCollection('dinner')">Dinner</button>
+    <button onclick="fetchCollection('dessert')">Dessert</button>
+  </nav>
+  <div id="collection-list" class="recipes-grid"></div>
+
+  <script src="js/collections.js"></script>
+</body>
+</html>

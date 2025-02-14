@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Recipe</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Recipe App</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="post-recipe.html">Post Recipe</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Post a New Recipe</h2>
+    <form id="post-recipe-form">
+      <label for="title">Title:</label>
+      <input type="text" id="title" required>
+      <label for="image">Recipe Image:</label>
+<input type="file" id="image" accept="image/*">
+
+      <label for="description">Description:</label>
+      <textarea id="description" required></textarea>
+      <label for="ingredients">Ingredients (comma-separated):</label>
+      <textarea id="ingredients" required></textarea>
+      <label for="instructions">Instructions:</label>
+      <textarea id="instructions" required></textarea>
+      <button type="submit">Post Recipe</button>
+    </form>
+    <p id="post-recipe-message"></p>
+  </main>
+
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const recipeId = urlParams.get("recipeId");
+  
+    // Check if editing an existing recipe
+    if (recipeId) {
+      document.querySelector("h2").textContent = "Edit Recipe"; // Change title
+      document.querySelector("button[type='submit']").textContent = "Update Recipe"; // Change button text
+  
+      // Pre-fill form fields
+      document.getElementById("title").value = decodeURIComponent(urlParams.get("title")) || "";
+      document.getElementById("description").value = decodeURIComponent(urlParams.get("description")) || "";
+      document.getElementById("ingredients").value = decodeURIComponent(urlParams.get("ingredients")) || "";
+      document.getElementById("instructions").value = decodeURIComponent(urlParams.get("instructions")) || "";
+
+    }
+  
+    document.getElementById("post-recipe-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        alert("Please login to continue");
+        return;
+      }
+  
+      let response;
+      let successMessage = "";
+  
+      if (recipeId) {
+        // **Update existing recipe (Send JSON, not FormData)**
+        const updatedRecipe = {
+          title: document.getElementById("title").value,
+          description: document.getElementById("description").value,
+          ingredients: document.getElementById("ingredients").value.split(","),
+          instructions: document.getElementById("instructions").value,
+        };
+  
+        response = await fetch(`${API_BASE_URL}/recipes/update/${recipeId}`, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json", // ✅ Important for JSON
+          },
+          body: JSON.stringify(updatedRecipe), // ✅ Send JSON data
+        });
+        successMessage = "Recipe updated successfully!";
+      } else {
+        // **Create a new recipe (Use FormData for file upload)**
+        const formData = new FormData();
+        formData.append("title", document.getElementById("title").value);
+        formData.append("description", document.getElementById("description").value);
+        formData.append("ingredients", document.getElementById("ingredients").value.split(","));
+        formData.append("instructions", document.getElementById("instructions").value);
+  
+        const imageFile = document.getElementById("image").files[0];
+        if (imageFile) {
+          formData.append("image", imageFile);
+        }
+  
+        response = await fetch(`${API_BASE_URL}/recipes`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+          body: formData, // ✅ Use FormData for POST only
+        });
+        successMessage = "Recipe posted successfully!";
+      }
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert(successMessage);
+        window.location.href = recipeId ? "myrecipe.html" : "index.html"; // Redirect appropriately
+      } else {
+        document.getElementById("post-recipe-message").textContent = data.error;
+      }
+    });
+  </script>
+  
+  
+  <script src="js/recipe.js"></script
+</body>
+</html>

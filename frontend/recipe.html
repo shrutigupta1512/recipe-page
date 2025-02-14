@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Details</title>
+  <link rel="stylesheet" href="css/recipe.css">
+</head>
+<body>
+  <div id="recipe-container">
+    <h1 id="recipe-title"></h1>
+    <img id="recipe-image" class="recipe-image" alt="Recipe Image" />
+    <p id="recipe-description"></p>
+    <h3>Ingredients</h3>
+    <ul id="recipe-ingredients"></ul>
+    <h3>Instructions</h3>
+    <p id="recipe-instructions"></p>
+  </div>
+
+  <div id="comments-section">
+    <h3>Comments</h3>
+    <ul id="comments-list"></ul>
+
+    <h4>Add a Comment</h4>
+    <form id="comment-form">
+      <textarea id="comment-text" placeholder="Write your comment..." required></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+  </div>
+
+  <div id="status-message"></div>
+
+  <script src="js/recipe.js"></script>
+</body>
+</html>
